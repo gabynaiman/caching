@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Caching::VERSION
   spec.authors       = ["Gabriel Naiman"]
   spec.email         = ["gnaiman@keepcon.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = 'Cache methods'
+  spec.summary       = 'Cache methods'
+  spec.homepage      = "https://github.com/gabynaiman/caching"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
