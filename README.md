@@ -6,7 +6,7 @@
 [![Code Climate](https://codeclimate.com/github/gabynaiman/caching.png)](https://codeclimate.com/github/gabynaiman/caching)
 [![Dependency Status](https://gemnasium.com/gabynaiman/caching.png)](https://gemnasium.com/gabynaiman/caching)
 
-TODO: Write a gem description
+Cache methods
 
 ## Installation
 
@@ -24,7 +24,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    class Model
+      extend Caching
+      
+      cache :slow_method, :other_slow_method
+
+      def slow_method
+        ...
+      end
+
+      def other_slow_method
+        ...
+      end
+
+      def fast_method
+        ...
+      end
+    end
 
 ## Contributing
 
