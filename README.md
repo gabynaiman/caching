@@ -25,22 +25,35 @@ Or install it yourself as:
 ## Usage
 
     class Model
-      extend Caching
-      
-      cache :slow_method, :other_slow_method
-
       def slow_method
         ...
       end
+      cache_method :slow_method
 
-      def other_slow_method
+      def slow_method_with_args(*args)
         ...
       end
+      cache_method :slow_method_with_args
 
       def fast_method
         ...
       end
     end
+
+    model = Model.new
+    
+    model.slow_method # => Execute method
+    model.slow_method # => Return cached value
+
+    model.slow_method_with_args 'some value' # => Execute method
+    model.slow_method_with_args 'some value' # => Return cached value for argument 'some value'
+
+    model.slow_method_with_args 1234 # => Execute method
+    model.slow_method_with_args 1234 # => Return cached value for argument 1234
+
+    model.clear_cache :slow_method # => Remove cache only for method slow_method
+
+    model.clear_cache # => Remove cache for all cached methods
 
 ## Contributing
 
