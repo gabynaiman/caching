@@ -24,10 +24,8 @@ describe Caching do
       @fast_method += 1
     end
 
-    def reset
-      clear_cache
-    end
   end
+
 
   it 'Cache methods' do
     object = Cachable.new
@@ -76,20 +74,6 @@ describe Caching do
     object.clear_cache :slow_method_with_args
 
     object.slow_method.must_equal 1
-    object.slow_method_with_args([1]).must_equal 3
-    object.slow_method_with_args('text').must_equal 4
-  end
-
-  it 'Clear cache inside object' do
-    object = Cachable.new
-
-    3.times { object.slow_method.must_equal 1 }
-    3.times { object.slow_method_with_args([1]).must_equal 1 }
-    3.times { object.slow_method_with_args('text').must_equal 2 }
-
-    object.reset
-
-    object.slow_method.must_equal 2
     object.slow_method_with_args([1]).must_equal 3
     object.slow_method_with_args('text').must_equal 4
   end
