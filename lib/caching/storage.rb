@@ -3,14 +3,15 @@ module Caching
     
     def initialize
       @storage = {}
+      @lock = Mutex.new
     end
 
     def read(key)
-      @storage[key]
+      @lock.synchronize { @storage[key] }
     end
 
     def write(key, value)
-      @storage[key] = value
+      @lock.synchronize { @storage[key] = value } 
     end
 
     def fetch(key)
