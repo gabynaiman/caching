@@ -7,15 +7,16 @@ module Caching
     end
 
     def read(key)
-      @lock.synchronize { @storage[key] }
+       @storage[key]
     end
 
     def write(key, value)
-      @lock.synchronize { @storage[key] = value } 
+      @lock.synchronize { set key, value }
     end
 
     def fetch(key)
-      read(key) || write(key, yield)
+      # return @storage[key] if @storage.key? key
+      @lock.synchronize { read(key) || set(key, yield) }
     end
 
     def clear(*keys)
@@ -24,6 +25,12 @@ module Caching
       else
         keys.each { |k| @storage.delete k }
       end
+    end
+
+    private
+
+    def set(key, value)
+      @storage[key] = value
     end
 
   end
