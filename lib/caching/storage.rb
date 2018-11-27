@@ -15,8 +15,11 @@ module Caching
     end
 
     def fetch(key)
-      # return @storage[key] if @storage.key? key
-      @lock.synchronize { read(key) || set(key, yield) }
+      if @lock.owned?
+        read(key) || set(key, yield)
+      else
+        @lock.synchronize { read(key) || set(key, yield) }
+      end
     end
 
     def clear(*keys)
