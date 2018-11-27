@@ -1,6 +1,7 @@
 Dir["#{File.dirname(__FILE__)}/caching/*.rb"].each { |file| require file }
 require 'set'
 require 'base64'
+require 'concurrent'
 
 module Caching
 

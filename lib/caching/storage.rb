@@ -2,7 +2,7 @@ module Caching
   class Storage
     
     def initialize
-      @storage = {}
+      @storage = Concurrent::Hash.new
       @lock = Mutex.new
     end
 
@@ -11,15 +11,11 @@ module Caching
     end
 
     def write(key, value)
-      @lock.synchronize { set key, value }
+      @storage[key] = value
     end
 
     def fetch(key)
-      if @lock.owned?
-        read(key) || set(key, yield)
-      else
-        @lock.synchronize { read(key) || set(key, yield) }
-      end
+      read(key) || write(key, yield)
     end
 
     def clear(*keys)
@@ -28,12 +24,6 @@ module Caching
       else
         keys.each { |k| @storage.delete k }
       end
-    end
-
-    private
-
-    def set(key, value)
-      @storage[key] = value
     end
 
   end
