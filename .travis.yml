@@ -6,9 +6,13 @@ rvm:
   - 2.3.0
   - 2.4.0
   - 2.5.0
+  - 2.6.0
   - ruby-head
 
 matrix:
   fast_finish: true
   allow_failures:
     - rvm: ruby-head
+
+before_install:
+  - gem install bundler -v "< 2"
